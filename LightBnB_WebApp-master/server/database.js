@@ -28,9 +28,23 @@ const getUserWithEmail = function(email) {
       user = null;
     }
   }
+  console.log("LOOK HERE: " + user);
   return Promise.resolve(user);
 }
 exports.getUserWithEmail = getUserWithEmail;
+
+const getUserWithEmail2 = function(email) {
+  return pool
+    .query(`SELECT * FROM properties LIMIT $1`, [limit])
+    .then((result) => {
+      console.log(result.rows);
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
 
 /**
  * Get a single user from the database given their id.
@@ -68,7 +82,6 @@ const getAllReservations = function(guest_id, limit = 10) {
 exports.getAllReservations = getAllReservations;
 
 /// Properties
-//-------------------------------------------------------------------------------
 /**
  * Get all properties.
  * @param {{}} options An object containing query options.
@@ -87,7 +100,6 @@ exports.getAllReservations = getAllReservations;
     });
 };
 exports.getAllProperties = getAllProperties;
-//-------------------------------------------------------------------------------
 
 /**
  * Add a property to the database
